@@ -16,21 +16,23 @@ public interface Dao<T> {
 	
 	public List<T> findAll();
 	
+	public List<T> findAll(Optional<Integer> offset, Optional<Integer> limit);
+	
 	public <K> T find(K id);
 	
 	public void remove(T t);
 	
 	public <K> List<T> find(SingularAttribute<T, K> property, K value);
 
-	public <K> List<T> find(SingularAttribute<T, K> property, K value, Optional<Integer> offset, Optional<Integer> count);
+	public <K> List<T> find(SingularAttribute<T, K> property, K value, Optional<Integer> offset, Optional<Integer> limit);
 	
-	public <K> List<T> find(SingularAttribute<T, K> property, K value, Optional<Integer> offset, Optional<Integer> count, Order order);
+	public <K> List<T> find(SingularAttribute<T, K> property, K value, Optional<Integer> offset, Optional<Integer> limit, Optional<Order> order);
 	
 	public <K> List<T> find(Map<SingularAttribute<T, K>, K> properties);
 	
-	public <K> List<T> find(Map<SingularAttribute<T, K>, K> properties, Optional<Integer> offset, Optional<Integer> count);
+	public <K> List<T> find(Map<SingularAttribute<T, K>, K> properties, Optional<Integer> offset, Optional<Integer> limit);
 	
-	public <K> List<T> find(Map<SingularAttribute<T, K>, K> properties, Optional<Integer> offset, Optional<Integer> count, Order order);
+	public <K> List<T> find(Map<SingularAttribute<T, K>, K> properties, Optional<Integer> offset, Optional<Integer> limit, Optional<Order> order);
 	
 	public <K> T findUnique(SingularAttribute<T, K> property, K value);
 	
