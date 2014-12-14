@@ -1,0 +1,17 @@
+<!-- begin: logback.xml -->
+<configuration>
+<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+        <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+</appender>
+
+<logger name="pt.olicasbo.guicejpa" level="DEBUG"/>
+<logger name="org.hibernate" level="INFO" />
+
+<root level="DEBUG">
+    <appender-ref ref="console"/>
+</root>
+
+</configuration>
+<!-- end: logback.xml -->

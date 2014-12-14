@@ -29,7 +29,7 @@ public class DaoImpl<T> implements Dao<T> {
 	@Inject
 	protected DaoImpl(TypeLiteral<T> type, Provider<EntityManager> emp,
 			Provider<EntityManagerFactory> emfp) {
-		this.clazz = (Class<T>) checkNotNull(type, "type cannot be null.").getClass();
+		this.clazz = (Class<T>) checkNotNull(type, "type cannot be null.").getRawType();
 		this.emp = checkNotNull(emp, "emp cannot be null.");
 		this.emfp = checkNotNull(emfp, "emfp cannot be null.");
 	}
