@@ -7,7 +7,7 @@
 </appender>
 
 <logger name="pt.olicasbo.guicejpa" level="DEBUG"/>
-<logger name="org.hibernate" level="INFO" />
+<logger name="org.hibernate" level="WARN" />
 
 <root level="DEBUG">
     <appender-ref ref="console"/>

@@ -7,10 +7,12 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.metamodel.SingularAttribute;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,6 +25,7 @@ import pt.olivasbo.guicejpa.dao.Dao;
 import pt.olivasbo.guicejpa.model.User;
 import pt.olivasbo.guicejpa.model.User_;
 
+import com.google.common.collect.Maps;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -107,6 +110,29 @@ public class TestDao {
 		User u = getUser();
 		userDao.save(u);
 		User foundUser = userDao.findUnique(User_.username, u.getUsername());
+		log.debug("testFindUniqueByProperty: {}", foundUser.toString());
+		assertNotNull(foundUser);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public <K extends Object> void testFindUniqueByMultipleProperties(){
+		User u = getUser();
+		userDao.save(u);
+		Map<SingularAttribute<User, K>, K> attributes = Maps.newHashMap();
+		attributes.put((SingularAttribute<User, K>) User_.email, (K) u.getEmail());
+		attributes.put((SingularAttribute<User, K>) User_.password, (K) u.getPassword());
+		User foundUser = userDao.findUnique(attributes);
+		log.debug("testFindUniqueByMultipleProperties: {}", foundUser.toString());
+		assertNotNull(foundUser);
+	}
+	
+	/**
+	 * When the method unique is used, if no entity is found with the criteria a NoResultException is thrown.
+	 * */
+	@Test(expected=NoResultException.class)
+	public void testFindUniqueByPropertyFailed(){
+		User foundUser = userDao.findUnique(User_.username, "unexisting-username");
 		log.debug("testFindUniqueByProperty: {}", foundUser.toString());
 		assertNotNull(foundUser);
 	}
